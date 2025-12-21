@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>bienvenue sur TechStore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <header class="first">
+        <h2>TechStore</h2>
+    </header>
+
+
+    <aside class="second">
+        <button onclick="showSection('dashboard')">Dashboard</button>
+        <button onclick="showSection('products')">Produits</button>
+    </aside>
+
+
+    <main class="content">
+
+        <section id="dashboard" class="section">
+            <h2 class="page-title">Dashboard</h2>
+
+            <div class="kpi-container">
+                <div class="kpi-card">
+                    <p>Total Produits</p>
+                    <h1 id="totalProducts">0</h1>
+                </div>
+
+                <div class="kpi-card">
+                    <p>Stock Total</p>
+                    <h1 id="totalStock">0</h1>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="products" class="section hidden">
+            <h3>Produits</h3>
+
+            <form id="productForm">
+                <input type="text" id="name" placeholder="Nom du produit">
+                <input type="number" id="price" placeholder="Prix">
+                <button type="submit">Ajouter</button>
+            </form>
+
+            <ul id="productList"></ul>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
