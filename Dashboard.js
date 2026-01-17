@@ -1,4 +1,4 @@
-let myChart = null; 
+let myChart = null;
 
 function updateDashboard() {
     const products = Data.getProducts();
@@ -9,11 +9,11 @@ function updateDashboard() {
 
     let totalValue = 0;
     products.forEach(p => {
-        totalValue += p.price * p.stock;
+        totalValue += p.price * p.rating.count;
     });
     document.getElementById('kpi-value').innerText = totalValue + " MAD";
 
-    
+
     updateChart(products, categories);
 }
 
@@ -28,23 +28,19 @@ function updateChart(products, categories) {
     });
 
     products.forEach(p => {
-        
-        const cat = categories.find(c => c.id == p.categoryId);
-        if (cat) {
-            stockParCat[cat.name] += p.stock;
-        }
+        stockParCat[p.category] += p.rating.count;
     });
 
-    
-    const labels = Object.keys(stockParCat); 
+
+    const labels = Object.keys(stockParCat);
     const dataValues = Object.values(stockParCat);
 
-    
+
     if (myChart) {
         myChart.destroy();
     }
 
-   
+
     myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -63,28 +59,4 @@ function updateChart(products, categories) {
             }
         }
     });
-}
-
-
-function loadExternalData() {
-    const list = document.getElementById('api-users-list');
-
-   
-    fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json()) N
-        .then(data => {
-            
-            list.innerHTML = ''; 
-
-            
-            const users = data.slice(0, 3);
-
-            users.forEach(user => {
-                list.innerHTML += `<li><strong>${user.name}</strong> - ${user.email}</li>`;
-            });
-        })
-        .catch(error => {
-            console.error("Erreur API:", error);
-            list.innerHTML = `<li style="color:red">Erreur de chargement</li>`;
-        });
 }
