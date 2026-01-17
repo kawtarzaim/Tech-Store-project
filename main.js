@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDashboard();
 
     // Charger l'API externe
-    loadExternalData();
 });
 
 
@@ -51,3 +50,59 @@ function closeModals() {
     document.getElementById('product-modal').style.display = 'none';
     document.getElementById('category-modal').style.display = 'none';
 }
+
+document.querySelector(".searchForm").addEventListener("submit", e => {
+    const tbody = document.getElementById('products-body');
+
+    e.preventDefault();
+    let list = []
+    JSON.parse(localStorage.getItem("products")).forEach(p => {
+        if (p.title.toLowerCase().search(e.target.query.value) > -1) {
+            list.push(p);
+        }
+    })
+    tbody.innerHTML = '';
+
+    list.forEach(prod => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${prod.title}</td>
+                <td>${prod.price} MAD</td>
+                <td>${prod.category}</td>
+                <td>${prod.rating.count}</td>
+                <td>
+                    <button class="btn" onclick="editProduct(${prod.id})">Modifier</button>
+                    <button class="btn btn-danger" onclick="deleteProduct(${prod.id})">Supprimer</button>
+                </td>
+            </tr>
+        `;
+    });
+})
+
+document.querySelector(".sort").addEventListener("submit", e => {
+    const tbody = document.getElementById('products-body');
+
+    e.preventDefault();
+
+    const productList = JSON.parse(localStorage.getItem("products"))
+    productList.sort((a, b) => a.title.localeCompare(b.title));
+    tbody.innerHTML = '';
+
+    productList.forEach(prod => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${prod.title}</td>
+                <td>${prod.price} MAD</td>
+                <td>${prod.category}</td>
+                <td>${prod.rating.count}</td>
+                <td>
+                    <button class="btn" onclick="editProduct(${prod.id})">Modifier</button>
+                    <button class="btn btn-danger" onclick="deleteProduct(${prod.id})">Supprimer</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+)
