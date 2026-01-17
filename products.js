@@ -1,5 +1,5 @@
 function loadProducts(productsToList = null) {
-   
+
     if (!productsToList) {
         productsToList = Data.getProducts();
     }
@@ -9,16 +9,13 @@ function loadProducts(productsToList = null) {
     tbody.innerHTML = '';
 
     productsToList.forEach(prod => {
-        
-        const cat = categories.find(c => c.id == prod.categoryId);
-        const catName = cat ? cat.name : 'Inconnu';
 
         tbody.innerHTML += `
             <tr>
-                <td>${prod.name}</td>
+                <td>${prod.title}</td>
                 <td>${prod.price} MAD</td>
-                <td>${catName}</td>
-                <td>${prod.stock}</td>
+                <td>${prod.category}</td>
+                <td>${prod.rating.count}</td>
                 <td>
                     <button class="btn" onclick="editProduct(${prod.id})">Modifier</button>
                     <button class="btn btn-danger" onclick="deleteProduct(${prod.id})">Supprimer</button>
@@ -29,10 +26,10 @@ function loadProducts(productsToList = null) {
 }
 
 function updateCategorySelects() {
-   
+
     const categories = Data.getCategories();
 
-    
+
     const formSelect = document.getElementById('p-category');
     let options = '<option value="">Choisir...</option>';
     categories.forEach(c => {
@@ -40,7 +37,7 @@ function updateCategorySelects() {
     });
     formSelect.innerHTML = options;
 
-   
+
     const filterSelect = document.getElementById('filter-select');
     let filterOptions = '<option value="">Toutes les catégories</option>';
     categories.forEach(c => {
@@ -50,7 +47,7 @@ function updateCategorySelects() {
 }
 
 function openProductModal() {
-   
+
     document.getElementById('p-id').value = '';
     document.getElementById('p-name').value = '';
     document.getElementById('p-price').value = '';
@@ -68,10 +65,10 @@ function editProduct(id) {
     if (prod) {
         updateCategorySelects();
         document.getElementById('p-id').value = prod.id;
-        document.getElementById('p-name').value = prod.name;
+        document.getElementById('p-name').value = prod.title;
         document.getElementById('p-price').value = prod.price;
-        document.getElementById('p-stock').value = prod.stock;
-        document.getElementById('p-category').value = prod.categoryId;
+        document.getElementById('p-stock').value = prod.rating.count;
+        document.getElementById('p-category').value = prod.category;
 
         document.getElementById('product-modal').style.display = 'flex';
     }
@@ -89,19 +86,19 @@ function saveProduct(event) {
     let products = Data.getProducts();
 
     if (idStr) {
-        
+
         const index = products.findIndex(p => p.id == idStr);
         if (index !== -1) {
-            products[index] = { id: Number(idStr), name, price, stock, categoryId: Number(categoryId) };
+            products[index] = { id: Number(idStr), title: nom, price, rating: { "count": stock }, category: categoryId };
         }
     } else {
         // AJOUT
         const newProd = {
             id: Date.now(),
-            name: name,
+            title: name,
             price: price,
-            stock: stock,
-            categoryId: Number(categoryId)
+            rating: { count: stock },
+            category: categoryId
         };
         products.push(newProd);
     }
@@ -109,7 +106,7 @@ function saveProduct(event) {
     Data.saveProducts(products);
     closeModals();
     loadProducts();
-    updateDashboard(); 
+    updateDashboard();
 }
 
 function deleteProduct(id) {
@@ -129,12 +126,12 @@ function filterProducts() {
 
     let products = Data.getProducts();
 
-   
+
     if (search) {
         products = products.filter(p => p.name.toLowerCase().includes(search));
     }
 
-    
+
     if (catFilter) {
         products = products.filter(p => p.categoryId == catFilter);
     }
