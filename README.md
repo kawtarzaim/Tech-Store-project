@@ -5,7 +5,7 @@ G7-1
 #sujet 
 Tech Srore Website (HTML5, CSS3, Javascript Vanilla)
 
-#MEMBRES 
+#MEMBRES
 
 NOM : Zaim Sassi
 Prenom : Kawtar
