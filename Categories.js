@@ -28,7 +28,7 @@ function saveCategory(event) {
 
     const categories = Data.getCategories();
 
-   
+
     const newId = Date.now();
 
     categories.push({
@@ -38,16 +38,16 @@ function saveCategory(event) {
 
     Data.saveCategories(categories);
 
-    
+
     nameInput.value = '';
     closeModals();
 
-    
+
     loadCategories();
 
-   
+
     updateCategorySelects();
-    updateDashboard(); 
+    updateDashboard();
 }
 
 function deleteCategory(id) {
