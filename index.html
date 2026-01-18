@@ -7,7 +7,7 @@
     <title>TechStore Dashboard</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -45,27 +45,26 @@
                 <h3>Stock par Catégorie</h3>
                 <canvas id="myChart"></canvas>
             </div>
-
-            <br>
-            <div class="card">
-                <h3>Utilisateurs Récents</h3>
-                <ul id="api-users-list" style="list-style: none; text-align: left;">
-                    <li>Chargement...</li>
-                </ul>
-            </div>
         </section>
 
 
         <section id="products">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <input type="text" id="search-input" placeholder="Rechercher..." onkeyup="filterProducts()">
-                    <select id="filter-select" onchange="filterProducts()">
-                        <option value="">Toutes les catégories</option>
-                    </select>
+                    <form class="searchForm">
+                        <input type="text" id="search-input" name="query" placeholder="Rechercher...">
+                        <select id="filter-select" onchange="filterProducts()">
+                            <option value="">Toutes les catégories</option>
+                        </select>
+                        <button class="btn">Rechercher</button>
+                    </form>
                 </div>
+
                 <button class="btn" onclick="openProductModal()">+ Ajouter Produit</button>
             </div>
+            <form class="sort">
+                <button class="btn">Trier</button>
+            </form>
 
             <table id="products-table">
                 <thead>
@@ -146,11 +145,11 @@
     </div>
 
 
-    <script src="js/store.js"></script>
-    <script src="js/modules/categories.js"></script>
-    <script src="js/modules/products.js"></script>
-    <script src="js/modules/dashboard.js"></script>
-    <script src="js/main.js"></script>
+    <script src="store.js"></script>
+    <script src="Categories.js"></script>
+    <script src="products.js"></script>
+    <script src="Dashboard.js"></script>
+    <script src="main.js"></script>
 
 </body>
 
